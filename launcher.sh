@@ -11,4 +11,5 @@ for ip in $IP_ADRESSES; do
 done
 echo
 
+bash stopper.sh
 sudo docker compose up --build

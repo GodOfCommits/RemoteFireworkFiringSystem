@@ -23,6 +23,11 @@ import {
 // ----------------------------------------- FUNCTIONS
 // -----------------------------------------
 
+function init() {
+  setDisplayText("CONFIGURATION", textColorClassesList.blue);
+  clearSubText();
+}
+
 function saveConfig() {
   // Logic to save configuration settings
   setDisplayText("CONFIG SAVED", textColorClassesList.green);
@@ -43,6 +48,8 @@ function openLauncherConfig() {
 // -----------------------------------------
 // ----------------------------------------- SCRIPT
 // -----------------------------------------
+
+init();
 
 // ----------------------------------------- EVENT LISTENERS
 
