@@ -1,0 +1,19 @@
+services:
+  remote-firework-firing-system:
+    security_opt:
+      - apparmor:unconfined
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: remote-firework-firing-system-app
+    ports:
+      - "8045:8045"
+    environment:
+      - NODE_ENV=production
+    restart: "no"
+    networks:
+      - remote-firework-firing-system-network
+
+networks:
+  remote-firework-firing-system-network:
+    driver: bridge

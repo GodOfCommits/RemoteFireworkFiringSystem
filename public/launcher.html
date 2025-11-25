@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Launcher</title>
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="style copy.css">
+</head>
+
+
+<body>
+  <div class="background">
+    <div class="container">
+      <h1>GMPYRO</h1>
+      <hr class="text-black bg-black border-black" />
+
+      <div class="d-flex">
+        <div class="section-wrapper">
+          <h4 class="m-b-10">POWER</h4>
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button id="power-btn" class="off btn btn-lg">
+                <img draggable="false" src="./assets/power-btn.png" alt="Power Button" />
+              </button>
+              <span>POWER</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-wrapper w-100 display">
+          <h2 id="display-text" class="w-100 flex-center-center" style="height: 50px"></h2>
+          <h5 id="display-sub-text" class="w-100 text-white flex-center-center" style="height: 50px"></h5>
+        </div>
+
+        <div class="section-wrapper">
+          <h4 class="m-b-10">GENERAL</h4>
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button id="fire-all-btn" class="btn btn-lg btn-red" disabled></button>
+              <span>FIRE ALL</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button id="reset-btn" class="btn btn-lg btn-green" disabled></button>
+              <span>RESET</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button id="config-btn" class="btn btn-lg btn-white"></button>
+              <span>CONFIG SEQ</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex">
+        <div class="section-wrapper">
+          <h4 class="m-b-10">CHANNEL</h4>
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="1" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>1</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="2" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>2</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="3" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>3</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="4" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>4</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="5" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>5</span>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="6" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>6</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="7" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>7</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="8" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>8</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="9" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>9</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="10" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>10</span>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="11" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>11</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="12" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>12</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="13" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>13</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="14" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>14</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="15" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>15</span>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="16" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>16</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="17" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>17</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="18" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>18</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="19" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>19</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="20" class="btn btn-lg btn-red fire-btn" disabled></button>
+              <span>20</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-wrapper">
+          <h4 class="m-b-10">SEQUENCES</h4>
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="S1" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 1</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S2" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 2</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S3" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 3</span>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="S4" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 4</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S5" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 5</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S6" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 6</span>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="S7" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 7</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S8" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 8</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S9" class="btn btn-lg btn-red sequence-btn" disabled></button>
+              <span>SEQ 9</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="launcher.js" type="module"></script>
+</body>
+
+</html>
