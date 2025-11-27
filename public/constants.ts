@@ -44,6 +44,20 @@ export const elSaveBtn = document.getElementById(
 export const elLauncherBtn = document.getElementById(
   "launcher-btn"
 ) as HTMLButtonElement;
+export const elChannelBtn = document.getElementById(
+  "add-channel-btn"
+) as HTMLButtonElement;
+export const elDelayBtn = document.getElementById(
+  "add-delay-btn"
+) as HTMLButtonElement;
+
+export const channelInput = document.getElementById(
+  "channel"
+) as HTMLInputElement;
+export const channelSelectorDisplay = document.getElementById(
+  "channel-selector-display"
+);
+export const delayInput = document.getElementById("delay") as HTMLInputElement;
 
 // -----------------------------------------
 // ----------------------------------------- FUNCTIONS

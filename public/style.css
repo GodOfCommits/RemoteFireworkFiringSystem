@@ -77,6 +77,14 @@ body {
   width: 60px;
 }
 
+.btn-md {
+  width: 45px;
+}
+
+.btn-sm {
+  width: 36px;
+}
+
 .btn-red {
   background-color: var(--red);
 }
@@ -87,6 +95,10 @@ body {
 
 .btn-white {
   background-color: var(--white);
+}
+
+.btn-yellow {
+  background-color: var(--yellow);
 }
 
 #power-btn.on {
@@ -100,6 +112,11 @@ body {
 
 .d-flex {
   display: flex;
+}
+
+.spacer-10 {
+  height: 10px;
+  width: 100%;
 }
 
 .align-items-center {
@@ -190,7 +207,34 @@ body {
 
 #display-sub-text {
   word-wrap: break-word;
-  overflow: hidden;
+  overflow-y: auto;
+  text-align: center;
+  white-space: normal;
+  min-height: 50px; /* minimum for one line */
+  width: 100%;
+  color: var(--white);
+}
+
+.delay-selector {
+  font-family: "Seven Segment", Arial, Helvetica, sans-serif;
+  font-size: 20px;
+  background-color: var(--black);
+  color: var(--green);
+  border: 2px solid var(--black);
+  border-radius: 8px;
+  margin: auto;
+  padding: 6px 10px;
+  box-shadow: inset 2px 2px 6px #000000;
+  outline: none;
+  width: 195px;
+}
+
+.delay-selector::placeholder {
+  color: rgba(0, 170, 79, 0.4);
+}
+
+.delay-selector:focus {
+  border-color: var(--green);
 }
 
 .bg-black {
@@ -215,6 +259,14 @@ body {
 
 .border-black {
   border-color: var(--black);
+}
+
+.btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
 }
 
 @keyframes glowing {
@@ -324,6 +376,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    min-height: 64px;
+    max-height: 300px; /* let it grow larger */
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    overflow-y: auto;
   }
 
   .d-flex.row-1 {
@@ -339,6 +397,16 @@ body {
   .btn-lg {
     width: 56px;
     height: 56px;
+  }
+
+  .btn-md {
+    width: 42px;
+    height: 42px;
+  }
+
+  .btn-sm {
+    width: 36px;
+    height: 36px;
   }
 
   .btn-wrapper span {

@@ -19,7 +19,7 @@
       <div class="d-flex">
         <div class="section-wrapper w-100 display">
           <h2 id="display-text" class="w-100 flex-center-center" style="height: 50px"></h2>
-          <h5 id="display-sub-text" class="w-100 text-white flex-center-center" style="height: 50px"></h5>
+          <h5 id="display-sub-text" class="w-100 text-white flex-center-center"></h5>
         </div>
 
         <div class="section-wrapper">
@@ -43,8 +43,83 @@
 
       <div class="d-flex">
         <div class="section-wrapper">
-          <h4 class="m-b-10">CONFIGURATION SEQUENCE</h4>
-          <div class="d-flex"></div>
+          <h4 class="m-b-10">CHOOSE SEQUENCE</h4>
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="S1" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 1</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S2" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 2</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S3" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 3</span>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="S4" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 4</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S5" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 5</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S6" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 6</span>
+            </div>
+          </div>
+
+          <div class="d-flex">
+            <div class="btn-wrapper">
+              <button data-id="S7" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 7</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S8" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 8</span>
+            </div>
+
+            <div class="btn-wrapper">
+              <button data-id="S9" class="btn btn-lg btn-green sequence-btn"></button>
+              <span>SEQ 9</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Should contain configuration options, including a firework channel selector + add button, to add more
+            add up to 20 channels, a delay selector in ms and a + button to add this delay after the last added
+            element. -->
+        <div class="section-wrapper">
+          <h4 class="m-b-10">CONFIGURATION</h4>
+          <div class="d-flex">
+            <label id="channel-selector-display" for="channel" style="font-weight: bold;">Channel</label>
+          </div>
+          <div class="d-flex">
+            <input type="range" min="1" max="20" id="channel" class="channel-selector" />
+            <button id="add-channel-btn" class="btn btn-md btn-white">
+              <img draggable="false" src="./assets/plus-button.png" alt="Plus Button" />
+            </button>
+          </div>
+
+          <div class="d-flex">
+            <label for="delay" style="font-weight: bold;">Delay (ms)</label>
+          </div>
+          <div class="d-flex">
+            <input type=" text" placeholder="Enter a delay in ms" id="delay" class="delay-selector" />
+            <button id="add-delay-btn" class="btn btn-md btn-white">
+              <img draggable="false" src="./assets/plus-button.png" alt="Plus Button" />
+            </button>
+          </div>
         </div>
       </div>
     </div>
