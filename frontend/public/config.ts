@@ -116,6 +116,17 @@ function addChannel() {
   const channelValue = channelInput.value;
   if (!configuration[currentlySelectedSequenceId]) {
     configuration[currentlySelectedSequenceId] = [];
+  } //check if the channel number is already used in this sequence
+  else if (
+    configuration[currentlySelectedSequenceId].some(
+      (step) => step.type === "channel" && step.value === channelValue
+    )
+  ) {
+    setDisplaySubText(
+      `Channel ${channelValue} is already used in this sequence.`,
+      textColorClassesList.red
+    );
+    return;
   }
   configuration[currentlySelectedSequenceId].push({
     type: "channel",

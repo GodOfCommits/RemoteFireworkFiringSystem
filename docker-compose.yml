@@ -1,19 +1,36 @@
 services:
-  remote-firework-firing-system:
-    security_opt:
-      - apparmor:unconfined
+  frontend:
     build:
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
-    container_name: remote-firework-firing-system-app
+    container_name: firework-frontend
     ports:
       - "8045:8045"
-    environment:
-      - NODE_ENV=production
-    restart: "no"
+    restart: "unless-stopped"
     networks:
-      - remote-firework-firing-system-network
+      - firework-network
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: firework-backend
+    ports:
+      - "8080:80"
+    restart: "unless-stopped"
+    volumes:
+      - sequences_data:/var/www/html
+    devices:
+      - "/dev/gpiomem:/dev/gpiomem"
+    cap_add:
+      - SYS_RAWIO
+    networks:
+      - firework-network
+
+volumes:
+  sequences_data:
+    driver: local
 
 networks:
-  remote-firework-firing-system-network:
+  firework-network:
     driver: bridge
