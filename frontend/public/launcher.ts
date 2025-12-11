@@ -34,9 +34,28 @@ function togglePower() {
   power = !power;
 
   if (power) {
-    arm();
+    fetch(`${apiUrl}/api.php?endpoint=arm`, { method: "POST" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status) {
+          arm();
+        } else {
+          setDisplaySubText(data.message, textColorClassesList.red);
+          power = false;
+        }
+      })
+      .catch((err) => {
+        setDisplaySubText("Arming failed", textColorClassesList.red);
+        power = false;
+      });
   } else {
-    disarm();
+    fetch(`${apiUrl}/api.php?endpoint=disarm`, { method: "POST" })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status) {
+          disarm();
+        }
+      });
     clearSubText();
   }
 }
@@ -102,7 +121,7 @@ function fireall() {
 
   setDisplaySubText("Send signal to all channels", textColorClassesList.white);
 
-  fetch(`${apiUrl}/api.php/fireall`, {
+  fetch(`${apiUrl}/api.php?endpoint=fireall`, {
     method: "POST",
   })
     .then((response) => response.json())
@@ -126,7 +145,7 @@ function fireSequence(sequenceBtn: HTMLButtonElement): void {
     textColorClassesList.white
   );
 
-  fetch(`${apiUrl}/api.php/fire/sequence/${sequenceId}`, {
+  fetch(`${apiUrl}/api.php?endpoint=firesequence&value=${sequenceId}`, {
     method: "POST",
   })
     .then((response) => response.json())
@@ -153,7 +172,7 @@ function fireSingle(fireBtn: HTMLButtonElement): void {
   fireBtn.disabled = true;
   setDisplaySubText(`Send signal to channel ${id}`, textColorClassesList.white);
 
-  fetch(`${apiUrl}/api.php/fire/${id}`, {
+  fetch(`${apiUrl}/api.php?endpoint=fire&value=${id}`, {
     method: "POST",
   })
     .then((response) => response.json())

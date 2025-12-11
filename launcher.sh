@@ -12,4 +12,4 @@ done
 echo
 
 bash stopper.sh
-sudo docker compose up --build
+sudo docker compose up -d --build

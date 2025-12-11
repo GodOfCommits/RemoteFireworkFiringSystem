@@ -2,7 +2,7 @@
 // ----------------------------------------- CONSTANTS & VARIABLES
 // -----------------------------------------
 
-export const apiUrl = "http://10.10.10.106";
+export const apiUrl = "http://192.168.4.1:8080";
 
 export const elPowerBtn = document.getElementById(
   "power-btn"

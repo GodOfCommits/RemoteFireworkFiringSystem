@@ -5,7 +5,7 @@ services:
       dockerfile: Dockerfile
     container_name: firework-frontend
     ports:
-      - "8045:8045"
+      - "192.168.4.1:8045:8045"
     restart: "unless-stopped"
     networks:
       - firework-network
@@ -16,7 +16,7 @@ services:
       dockerfile: Dockerfile
     container_name: firework-backend
     ports:
-      - "8080:80"
+      - "192.168.4.1:8080:80"
     restart: "unless-stopped"
     volumes:
       - sequences_data:/var/www/html
@@ -24,8 +24,24 @@ services:
       - "/dev/gpiomem:/dev/gpiomem"
     cap_add:
       - SYS_RAWIO
+    privileged: true
     networks:
       - firework-network
+
+  captive-portal:
+    image: nginx:alpine
+    container_name: firework-portal
+    restart: unless-stopped
+    volumes:
+      # Mount our custom Nginx configuration file
+      - ./backend/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      # This catches all the hijacked traffic on port 80 of the hotspot
+      - "192.168.4.1:80:80"
+    networks:
+      - firework-network
+    depends_on:
+      - frontend
 
 volumes:
   sequences_data:

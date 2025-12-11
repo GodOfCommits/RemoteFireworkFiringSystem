@@ -15,8 +15,6 @@ import {
   textColorClassesList,
   setDisplayText,
   setDisplaySubText,
-  clearText,
-  clearSubText,
 } from "./constants.js";
 
 // -----------------------------------------
@@ -30,23 +28,56 @@ let currentlySelectedSequenceId: string | null = null;
 // -----------------------------------------
 // ----------------------------------------- FUNCTIONS
 // -----------------------------------------
-
+function loadConfiguration() {
+  fetch(`${apiUrl}/api.php?endpoint=get-configuration`)
+    .then((response) => {
+      if (!response.ok) {
+        return {};
+      }
+      return response.json();
+    })
+    .then((data) => {
+      configuration = data;
+      console.log("Configuration loaded successfully.");
+      if (currentlySelectedSequenceId) {
+        updateSequenceDisplay(currentlySelectedSequenceId);
+      }
+    })
+    .catch((error) => {
+      console.error("Error loading configuration:", error);
+      setDisplaySubText(
+        "Could not load saved config.",
+        textColorClassesList.red
+      );
+    });
+}
 function init() {
   setDisplayText("CONFIGURATION", textColorClassesList.green);
+  loadConfiguration();
 }
 
 function saveConfig() {
+  if (Object.keys(configuration).length === 0) {
+    setDisplaySubText("Nothing to save.", textColorClassesList.red);
+    return;
+  }
   setDisplayText("CONFIG SAVED", textColorClassesList.green);
   saveConfiguration();
 }
 
 function resetConfig() {
-  setDisplayText("CONFIG RESET", textColorClassesList.red);
+  if (!currentlySelectedSequenceId) {
+    setDisplaySubText(
+      "Please select a sequence to reset.",
+      textColorClassesList.red
+    );
+    return;
+  }
+  setDisplayText("SEQUENCE RESET", textColorClassesList.red);
   resetConfiguration();
 }
 
-function openLauncherConfig() {
-  // Redirect to launcher configuration page
+function openLauncher() {
   window.location.href = "launcher.html";
 }
 
@@ -55,12 +86,12 @@ function selectSequence(sequenceBtn: HTMLButtonElement) {
   currentlySelectedSequenceId = sequenceId;
 
   elsSequenceBtn.forEach((btn) => {
-    btn.disabled = false;
+    btn.style.borderColor = "";
   });
-  sequenceBtn.disabled = true;
+  sequenceBtn.style.borderColor = "var(--white)";
 
   updateSequenceDisplay(sequenceId || undefined);
-  setDisplayText(`Sequence: ${sequenceId}`, textColorClassesList.white);
+  setDisplayText(`SEQUENCE ${sequenceId}`, textColorClassesList.white);
 }
 
 function updateChannelSelector() {
@@ -69,45 +100,42 @@ function updateChannelSelector() {
   }
 }
 
-function updateSequenceDisplay(currentlySelectedSequenceId?: string) {
+function updateSequenceDisplay(sequenceId?: string) {
   const displaySubTextElement = document.getElementById("display-sub-text");
 
   if (!displaySubTextElement) return;
 
-  if (!currentlySelectedSequenceId) {
+  if (!sequenceId) {
     displaySubTextElement.innerHTML = "No Sequence Selected";
     displaySubTextElement.className =
       "w-100 text-white flex-center-center text-red";
     return;
   }
 
+  const sequenceSteps = configuration[sequenceId] || [];
   let sequenceHTML = "";
 
-  const sequenceSteps = configuration[currentlySelectedSequenceId];
-  if (sequenceSteps && sequenceSteps.length > 0) {
+  if (sequenceSteps.length > 0) {
     sequenceSteps.forEach((step, index) => {
       let stepValue = step.value;
       if (step.type === "delay") {
-        if (!step.value) {
-          stepValue = "0 ms";
-        } else stepValue = `${step.value} ms`;
+        stepValue = `${step.value} ms`;
       }
       sequenceHTML += `${
         index + 1
       }. ${step.type.toUpperCase()} - ${stepValue}<br>`;
     });
   } else {
-    sequenceHTML += "No steps in this sequence.";
+    sequenceHTML += "This sequence is empty.";
   }
 
   displaySubTextElement.innerHTML = sequenceHTML;
-  displaySubTextElement.className = "w-100 text-white flex-center-center";
 }
 
 function addChannel() {
   if (!currentlySelectedSequenceId) {
     setDisplaySubText(
-      "Please select a sequence before adding a channel.",
+      "Please select a sequence first.",
       textColorClassesList.red
     );
     return;
@@ -128,6 +156,7 @@ function addChannel() {
     );
     return;
   }
+
   configuration[currentlySelectedSequenceId].push({
     type: "channel",
     value: channelValue,
@@ -138,13 +167,18 @@ function addChannel() {
 function addDelay() {
   if (!currentlySelectedSequenceId) {
     setDisplaySubText(
-      "Please select a sequence before adding a delay.",
+      "Please select a sequence first.",
       textColorClassesList.red
     );
     return;
   }
 
-  const delayValue = delayInput.value;
+  let delayValue = delayInput.value.trim().replace(/[^0-9]/g, "");
+  if (delayValue === "") {
+    setDisplaySubText("Please enter a valid delay.", textColorClassesList.red);
+    return;
+  }
+
   if (!configuration[currentlySelectedSequenceId]) {
     configuration[currentlySelectedSequenceId] = [];
   }
@@ -152,11 +186,18 @@ function addDelay() {
     type: "delay",
     value: delayValue,
   });
+
   updateSequenceDisplay(currentlySelectedSequenceId);
+  // Clear the input for the next entry
+  delayInput.value = "";
 }
 
+// -----------------------------------------
+// ----------------------------------------- API CALLS
+// -----------------------------------------
+
 function saveConfiguration() {
-  fetch(`${apiUrl}/api.php/save-configuration`, {
+  fetch(`${apiUrl}/api.php?endpoint=save-configuration`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -166,33 +207,40 @@ function saveConfiguration() {
     .then((response) => response.json())
     .then((data) => {
       console.log("Configuration saved:", data);
+      if (!data.status) {
+        setDisplaySubText(data.message, textColorClassesList.red);
+      }
     })
     .catch((error) => {
       console.error("Error saving configuration:", error);
+      setDisplaySubText("SAVE FAILED", textColorClassesList.red);
     });
 }
 
 function resetConfiguration() {
-  configuration[currentlySelectedSequenceId || ""] = [];
-  updateSequenceDisplay(currentlySelectedSequenceId || undefined);
-
-  saveConfiguration();
+  if (currentlySelectedSequenceId) {
+    configuration[currentlySelectedSequenceId] = [];
+    updateSequenceDisplay(currentlySelectedSequenceId);
+    saveConfiguration();
+  }
 }
 
 // -----------------------------------------
-// ----------------------------------------- SCRIPT
+// ----------------------------------------- SCRIPT & EVENT LISTENERS
 // -----------------------------------------
 
 init();
 
-// ----------------------------------------- EVENT LISTENERS
-
 elSaveBtn.addEventListener("click", saveConfig);
 elResetBtn.addEventListener("click", resetConfig);
-elLauncherBtn.addEventListener("click", openLauncherConfig);
+elLauncherBtn.addEventListener("click", openLauncher);
 elChannelBtn.addEventListener("click", addChannel);
 elDelayBtn.addEventListener("click", addDelay);
-channelInput.addEventListener("change", updateChannelSelector);
+channelInput.addEventListener("input", updateChannelSelector);
 elsSequenceBtn.forEach((seqBtn) => {
   seqBtn.addEventListener("click", () => selectSequence(seqBtn));
+});
+
+delayInput.addEventListener("input", () => {
+  delayInput.value = delayInput.value.replace(/[^0-9]/g, "");
 });
